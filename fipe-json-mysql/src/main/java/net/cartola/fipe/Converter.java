@@ -75,6 +75,43 @@ public class Converter {
                     + "  \"codigoTabelaReferencia\": " + tabela + ",\n"
                     + "  \"codigoTipoVeiculo\": " + tipoVeiculo + "\n"
                     + "}";
+//            PostMethod method = conv.getRequest(path, body);
+//            int response = client.executeMethod(method);
+//            System.out.println("Response : " + response);
+//            ByteArrayOutputStream baos = conv.getResponseBody(method);
+//
+//            String responseBody = baos.toString("UTF-8");
+//            System.out.println(responseBody);
+//            conv.save(path + "-" + tabela + "-" + tipoVeiculo + "-", responseBody);
+
+            path = "ConsultarModelos";
+            tipoVeiculo = 1;
+            int codigoMarca = 59;
+            body = "{\n"
+                    + "  \"codigoTabelaReferencia\": " + tabela + ",\n"
+                    + "  \"codigoTipoVeiculo\": " + tipoVeiculo + ",\n"
+                    + "  \"codigoMarca\": " + codigoMarca + "\n"
+                    + "}";
+//            PostMethod method = conv.getRequest(path, body);
+//            int response = client.executeMethod(method);
+//            System.out.println("Response : " + response);
+//            ByteArrayOutputStream baos = conv.getResponseBody(method);
+//
+//            String responseBody = baos.toString("UTF-8");
+//            System.out.println(responseBody);
+//            conv.save(path + "-" + tabela + "-" + tipoVeiculo + "-" + codigoMarca + "-", responseBody);
+
+
+            path = "ConsultarAnoModelo";
+            tipoVeiculo = 1;
+            codigoMarca = 59;
+            int codigoModelo = 8070;
+            body = "{\n"
+                    + "  \"codigoTabelaReferencia\": " + tabela + ",\n"
+                    + "  \"codigoTipoVeiculo\": " + tipoVeiculo + ",\n"
+                    + "  \"codigoMarca\": " + codigoMarca + ",\n"
+                    + "  \"codigoModelo\": " + codigoModelo + "\n"
+                    + "}";
             PostMethod method = conv.getRequest(path, body);
             int response = client.executeMethod(method);
             System.out.println("Response : " + response);
@@ -82,8 +119,7 @@ public class Converter {
 
             String responseBody = baos.toString("UTF-8");
             System.out.println(responseBody);
-            conv.save(path + "-" + tabela + "-" + tipoVeiculo + "-", responseBody);
-
+            conv.save(path + "-" + tabela + "-" + tipoVeiculo + "-" + codigoMarca + "-" + codigoModelo + "-", responseBody);
         } catch (IOException ex) {
             Logger.getLogger(Converter.class.getName()).log(Level.SEVERE, null, ex);
         }
