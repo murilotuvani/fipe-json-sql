@@ -4,7 +4,7 @@
  * Copyright © 2019 <copyright holders>
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a  copy 
- * of this software and associated documentation files (the "Software"), to deal
+ * of this software and associated documentation files (the “Software�?), to deal
  * in the Software without restriction, including without limitation the  rights 
  * to use, copy, modify, merge, publish,  distribute,  sublicense,  and/or  sell 
  * copies of the Software, and  to  permit  persons  to  whom  the  Software  is 
@@ -12,7 +12,7 @@
  * The above copyright notice and this permission notice shall  be  included  in
  * all copies or substantial portions of the Software.
  * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY  KIND,  EXPRESS  OR
+ * THE SOFTWARE IS PROVIDED “AS IS", WITHOUT WARRANTY OF ANY  KIND,  EXPRESS  OR
  * IMPLIED, INCLUDING BUT NOT LIMITED  TO  THE  WARRANTIES  OF  MERCHANTABILITY, 
  * FITNESS FOR A PARTICULAR PURPOSE AND  NONINFRINGEMENT.  IN NO EVENT SHALL THE 
  * AUTHORS OR COPYRIGHT HOLDERS BE  LIABLE  FOR  ANY  CLAIM,  DAMAGES  OR  OTHER
@@ -22,38 +22,22 @@
  */
 package net.cartola.fipe.model;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
- * 05/11/2019 02:01:57
+ * 05/11/2019 11:01:24
  * @author murilotuvani
  */
-public class Tabela {
+public enum VeiculoTipo {
     
-    @SerializedName(value = "Codigo")
-    private int codigo;
-    @SerializedName(value = "Mes")
-    private String mes;
-
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
+    CARROS(1), MOTOS(2), CAMINHOES(3);
+    
+    private final int codigo;
+    
+    private VeiculoTipo(int codigo) {
         this.codigo = codigo;
     }
 
-    public String getMes() {
-        return mes;
-    }
-
-    public void setMes(String mes) {
-        this.mes = mes;
-    }
-
-    @Override
-    public String toString() {
-        return "Tabela{" + "codigo=" + codigo + ", mes=" + mes + '}';
+    public int getCodigo() {
+        return codigo;
     }
 
 }
