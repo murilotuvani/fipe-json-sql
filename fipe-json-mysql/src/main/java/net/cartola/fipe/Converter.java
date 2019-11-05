@@ -24,8 +24,13 @@ package net.cartola.fipe;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.httpclient.HttpClient;
@@ -39,6 +44,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
  */
 public class Converter {
 
+    private static DateTimeFormatter DATETIME_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
     private static String server = "http://veiculos.fipe.org.br/api/veiculos/";
 
     public static void main(String args[]) {
@@ -58,6 +64,7 @@ public class Converter {
 
             String responseBody = baos.toString("UTF-8");
             System.out.println(responseBody);
+            save(path, responseBody);
 
         } catch (IOException ex) {
             Logger.getLogger(Converter.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,5 +84,13 @@ public class Converter {
         baos.close();
         bis.close();
         return baos;
+    }
+
+    private static void save(String path, String responseBody) throws IOException {
+        LocalDateTime ldt = LocalDateTime.now();
+        String fileName = path + ldt.format(DATETIME_FORMATTER) + ".json";
+        File file = new File(fileName);
+        System.out.println("Arquivo : " + file.getAbsolutePath());
+        Files.write(file.toPath(), responseBody.getBytes(), StandardOpenOption.CREATE_NEW);
     }
 }
