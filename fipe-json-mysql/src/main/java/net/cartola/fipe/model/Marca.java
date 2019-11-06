@@ -23,20 +23,39 @@
 package net.cartola.fipe.model;
 
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 05/11/2019 14:18:23
  * @author murilo
  */
-public class Marca {
+public class Marca implements Serializable {
     
+    private transient int tabelaId;
+    private transient int marcaId;
     @SerializedName(value = "Value")
     private String value;
     @SerializedName(value = "Label")
     private String label;
     @SerializedName(value = "Modelos")
     private List<Modelo> modelos;
+
+    public int getTabelaId() {
+        return tabelaId;
+    }
+
+    public void setTabelaId(int tabelaId) {
+        this.tabelaId = tabelaId;
+    }
+
+    public int getMarcaId() {
+        return marcaId;
+    }
+
+    public void setMarcaId(int marcaId) {
+        this.marcaId = marcaId;
+    }
 
     public String getValue() {
         return value;

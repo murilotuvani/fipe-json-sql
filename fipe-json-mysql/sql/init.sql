@@ -19,67 +19,12 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
+ *//**
+ * Author:  murilo
+ * Created: 05/11/2019
  */
-package net.cartola.fipe.model;
+create table tabelas (tabela_id int unsigned not null auto_increment, codigo int unsigned not null,  mes char(20) not null, primary key (tabela_id));
+create table marcas (marca_id int unsigned not null auto_increment, tabela_id int unsigned not null, value char(10), label varchar(1024) not null, primary key (marca_id));
+create table modelos (modelo_id int unsigned not null auto_increment, marca_id int unsigned not null, tabela_id int unsigned not null, value char(10), label varchar(1024) not null, primary key (modelo_id));
+create table anos_modelos (ano_modelo_id int unsigned not null auto_increment, modelo_id int unsigned not null, marca_id int unsigned not null, tabela_id int unsigned not null, value char(10), label varchar(1024) not null, primary key (ano_modelo_id));
 
-import com.google.gson.annotations.SerializedName;
-
-/**
- * 05/11/2019 14:31:47
- * @author murilo
- */
-public class Modelo {
-
-    private transient int modeloId;
-    private transient int marcaId;
-    private transient int tabelaId;
-    @SerializedName(value = "Value")
-    private String value;
-    @SerializedName(value = "Label")
-    private String label;
-
-    public int getModeloId() {
-        return modeloId;
-    }
-
-    public void setModeloId(int modeloId) {
-        this.modeloId = modeloId;
-    }
-
-    public int getMarcaId() {
-        return marcaId;
-    }
-
-    public void setMarcaId(int marcaId) {
-        this.marcaId = marcaId;
-    }
-
-    public int getTabelaId() {
-        return tabelaId;
-    }
-
-    public void setTabelaId(int tabelaId) {
-        this.tabelaId = tabelaId;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    @Override
-    public String toString() {
-        return "Modelo{value=" + value + ", label=" + label + '}';
-    }
-}

@@ -30,10 +30,46 @@ import com.google.gson.annotations.SerializedName;
  */
 public class AnoModelo {
 
+    private transient int anoModeloId;
+    private transient int modeloId;
+    private transient int marcaId;
+    private transient int tabelaId;
     @SerializedName(value = "Value")
     private String value;
     @SerializedName(value = "Label")
     private String label;
+
+    public int getAnoModeloId() {
+        return anoModeloId;
+    }
+
+    public void setAnoModeloId(int anoModeloId) {
+        this.anoModeloId = anoModeloId;
+    }
+
+    public int getModeloId() {
+        return modeloId;
+    }
+
+    public void setModeloId(int modeloId) {
+        this.modeloId = modeloId;
+    }
+
+    public int getMarcaId() {
+        return marcaId;
+    }
+
+    public void setMarcaId(int marcaId) {
+        this.marcaId = marcaId;
+    }
+
+    public int getTabelaId() {
+        return tabelaId;
+    }
+
+    public void setTabelaId(int tabelaId) {
+        this.tabelaId = tabelaId;
+    }
 
     public String getValue() {
         return value;
