@@ -33,10 +33,19 @@ public class Modelo {
     private transient int modeloId;
     private transient int marcaId;
     private transient int tabelaId;
+    private transient Marca marca;
     @SerializedName(value = "Value")
     private String value;
     @SerializedName(value = "Label")
     private String label;
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
 
     public int getModeloId() {
         return modeloId;

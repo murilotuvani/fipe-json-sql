@@ -34,12 +34,30 @@ public class Marca implements Serializable {
     
     private transient int tabelaId;
     private transient int marcaId;
+    private transient Tabela tabela;
+    private transient VeiculoTipo veiculoTipo;
     @SerializedName(value = "Value")
     private String value;
     @SerializedName(value = "Label")
     private String label;
     @SerializedName(value = "Modelos")
     private List<Modelo> modelos;
+
+    public Tabela getTabela() {
+        return tabela;
+    }
+
+    public void setTabela(Tabela tabela) {
+        this.tabela = tabela;
+    }
+
+    public VeiculoTipo getVeiculoTipo() {
+        return veiculoTipo;
+    }
+
+    public void setVeiculoTipo(VeiculoTipo veiculoTipo) {
+        this.veiculoTipo = veiculoTipo;
+    }
 
     public int getTabelaId() {
         return tabelaId;
