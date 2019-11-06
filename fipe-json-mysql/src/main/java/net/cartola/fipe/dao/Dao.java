@@ -41,7 +41,7 @@ import javax.sql.rowset.serial.SerialBlob;
  */
 public abstract class Dao<T> {
     
-    private java.sql.Connection connection = null;
+    private static java.sql.Connection connection = null;
     
     public int salvar(T t) throws SQLException, ClassNotFoundException {
         int id = 0;

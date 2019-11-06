@@ -24,7 +24,6 @@ package net.cartola.fipe;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -40,8 +39,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.cartola.fipe.dao.AnoModeloDao;
 import net.cartola.fipe.dao.MarcaDao;
 import net.cartola.fipe.dao.ModeloDao;
+import net.cartola.fipe.model.AnoModelo;
 import net.cartola.fipe.model.Marca;
 import net.cartola.fipe.model.Modelo;
 import net.cartola.fipe.model.Tabela;
@@ -73,15 +74,13 @@ public class Converter {
 
             int tabelaId = 1;
             Tabela tabela = new Tabela();
+            tabela.setTabelaId(tabelaId);
             tabela.setCodigo(248);
             tabela.setMes("novembro/2019");
             Converter conv = new Converter();
             for (VeiculoTipo tipo : VeiculoTipo.values()) {
-                List<Marca> marcas = conv.marcas(tipo, tabela.getCodigo());
+                List<Marca> marcas = conv.marcas(tipo, tabela);
                 for (Marca marca : marcas) {
-                    marca.setVeiculoTipo(tipo);
-                    marca.setTabelaId(tabelaId);
-                    
                     MarcaDao marcaDao = new MarcaDao();
                     int marcaId = marcaDao.salvar(marca);
                     marca.setMarcaId(marcaId);
@@ -95,9 +94,22 @@ public class Converter {
                         ModeloDao modeloDao = new ModeloDao();
                         modelo.setTabelaId(tabelaId);
                         modelo.setMarca(marca);
+                        modelo.setMarcaId(marcaId);
                         
                         int modeloId = modeloDao.salvar(modelo);
                         modelo.setModeloId(modeloId);
+                        
+                        List<AnoModelo> anos = conv.anosModelos(modelo);
+                        AnoModeloDao amd = new AnoModeloDao();
+                        for (AnoModelo an : anos) {
+
+//                        anos.forEach(an -> {
+                            an.setTabelaId(tabelaId);
+                            an.setMarcaId(marcaId);
+                            an.setModeloId(modeloId);
+                            amd.salvar(an);
+//                        });
+                        }
                     }
 
                 }
@@ -122,8 +134,9 @@ public class Converter {
         save(path, responseBody);
     }
 
-    private List<Marca> marcas(VeiculoTipo veiculoTipo, int tabelaCodigo) throws UnsupportedEncodingException, IOException {
+    private List<Marca> marcas(VeiculoTipo veiculoTipo, final Tabela tabela) throws UnsupportedEncodingException, IOException {
         String path = "ConsultarMarcas";
+        int tabelaCodigo = tabela.getCodigo();
         String body = "{\n"
                 + "  \"codigoTabelaReferencia\": " + tabelaCodigo + ",\n"
                 + "  \"codigoTipoVeiculo\": " + veiculoTipo.getCodigo() + "\n"
@@ -138,7 +151,13 @@ public class Converter {
         save(path + "-" + tabelaCodigo + "-" + veiculoTipo.getCodigo() + "-", responseBody);
 
         Marca[] marcas = gson.fromJson(responseBody, Marca[].class);
-        return Arrays.asList(marcas);
+        List<Marca> marcasL = Arrays.asList(marcas);
+        marcasL.forEach(m -> {
+            m.setTabela(tabela);
+            m.setVeiculoTipo(veiculoTipo);
+            m.setTabelaId(tabela.getTabelaId());
+        });
+        return marcasL;
     }
 
     private Marca modelos(Marca marca) throws UnsupportedEncodingException, IOException {
@@ -164,7 +183,7 @@ public class Converter {
         return modelosDaMarca;
     }
 
-    private void anosModelos(Modelo modelo) throws UnsupportedEncodingException, IOException {
+    private List<AnoModelo> anosModelos(Modelo modelo) throws UnsupportedEncodingException, IOException {
         int tabelaCodigo = modelo.getMarca().getTabela().getCodigo();
         int veiculoTipo = modelo.getMarca().getVeiculoTipo().getCodigo();
         String marcaCodigo = modelo.getMarca().getValue();
@@ -185,6 +204,9 @@ public class Converter {
         String responseBody = baos.toString("UTF-8");
         System.out.println(responseBody);
         save(path + "-" + tabelaCodigo + "-" + veiculoTipo + "-" + marcaCodigo + "-" + modeloCodigo + "-", responseBody);
+        
+        AnoModelo[] anosModelo = gson.fromJson(responseBody, AnoModelo[].class);
+        return Arrays.asList(anosModelo);
     }
 
     public ByteArrayOutputStream getResponseBody(HttpMethod method) throws IOException {
