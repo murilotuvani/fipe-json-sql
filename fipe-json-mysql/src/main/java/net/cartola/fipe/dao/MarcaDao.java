@@ -36,13 +36,13 @@ public class MarcaDao extends Dao<Marca> {
     @Override
     public String getInsert() {
         //return "INSERT INTO marcas (marca_id,tabela_id,value,label) VALUES (?,?,?,?)";
-        return "INSERT INTO marcas (tabela_id,value,label) VALUES (?,?,?)";
+        return "INSERT INTO marcas (tabela_id,tipo,value,label) VALUES (?,?,?,?)";
     }
 
     @Override
     public String getUpdate() {
         //return "UPDATE marcas SET marca_id=?,tabela_id=?,value=?,label=?";
-        return "UPDATE marcas SET tabela_id=?,value=?,label=?";
+        return "UPDATE marcas SET tabela_id=?,tipo=?,value=?,label=?";
     }
 
     @Override
@@ -50,6 +50,7 @@ public class MarcaDao extends Dao<Marca> {
         int idx = 1;
 //        stmt.setInt(idx++, m.getMarcaId());
         stmt.setInt(idx++, m.getTabelaId());
+        stmt.setString(idx++, m.getVeiculoTipo().name());
         setNullSafe(stmt, m.getValue(), idx++);
         stmt.setString(idx++, m.getLabel());
     }

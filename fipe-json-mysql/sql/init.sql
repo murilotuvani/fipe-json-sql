@@ -29,7 +29,7 @@ use fipe;
 create table tabelas (tabela_id int unsigned not null auto_increment, codigo int unsigned not null,  mes char(20) not null, primary key (tabela_id));
 insert into tabelas (codigo, mes) values (248,"novembro/2019");
 
-create table marcas (marca_id int unsigned not null auto_increment, tabela_id int unsigned not null, value char(10), label varchar(1024) not null, primary key (marca_id));
+create table marcas (marca_id int unsigned not null auto_increment, tabela_id int unsigned not null, tipo enum('CARROS','MOTOS','CAMINHOES') not null,value char(10), label varchar(1024) not null, primary key (marca_id));
 create table modelos (modelo_id int unsigned not null auto_increment, marca_id int unsigned not null, tabela_id int unsigned not null, value char(10), label varchar(1024) not null, primary key (modelo_id));
 create table anos_modelos (ano_modelo_id int unsigned not null auto_increment, modelo_id int unsigned not null, marca_id int unsigned not null, tabela_id int unsigned not null, value char(10), label varchar(1024) not null, primary key (ano_modelo_id));
 
